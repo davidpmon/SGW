@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Acceso Denegado | MASS</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f9fafb;
+            color: #333;
+            font-family: "Segoe UI", sans-serif;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .error-container {
+            text-align: center;
+            background: #fff;
+            padding: 50px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            max-width: 500px;
+        }
+
+        .error-code {
+            font-size: 6rem;
+            font-weight: 800;
+            color: #004aad;
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+
+        .error-message {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .description {
+            color: #6c757d;
+            margin-bottom: 30px;
+        }
+
+        .btn-primary {
+            background-color: #004aad;
+            border: none;
+            padding: 10px 25px;
+            font-weight: 600;
+        }
+
+        .btn-primary:hover {
+            background-color: #003580;
+        }
+
+        .redirect-text {
+            font-size: 0.85rem;
+            margin-top: 20px;
+            color: #adb5bd;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="error-container">
+    <div class="error-code">403</div>
+    <div class="error-message">Acceso Restringido</div>
+    <p class="description">
+        Lo sentimos, no tienes los permisos necesarios para acceder a esta sección del <strong>SGW</strong>.
+    </p>
+
+    <div th:with="userRole=${#authentication.authorities[0].authority}">
+        <a th:if="${userRole == 'ROLE_ADMIN'}" th:href="@{/templates/supervisor/home}" class="btn btn-primary">
+            Ir a mi Inicio
+        </a>
+        <a th:if="${userRole == 'ROLE_SUPERVISOR'}" th:href="@{/templates/user/home}" class="btn btn-primary">
+            Ir a mi Inicio
+        </a>
+        <a th:unless="${userRole == 'ROLE_EDITOR'}" th:href="@{/}" class="btn btn-primary">
+            Volver al inicio
+        </a>
+    </div>
+
+    <p class="redirect-text">Serás redirigido automáticamente en <span id="countdown">5</span> segundos...</p>
+</div>
+
+<script>
+    // Lógica de redirección automática
+    let seconds = 100;
+    const countdownEl = document.getElementById('countdown');
+
+    const interval = setInterval(() => {
+        seconds--;
+        countdownEl.innerText = seconds;
+        if (seconds <= 0) {
+            clearInterval(interval);
+            // Redirige al botón que sea visible según el rol
+            const link = document.querySelector('.btn-primary');
+            if (link) link.click();
+        }
+    }, 1000);
+</script>
+
+</body>
+</html>
