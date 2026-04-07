@@ -1,4 +1,4 @@
-package com.example.demo.services;
+/*package com.example.demo.services;
 
 import com.example.demo.models.Usuario;
 import com.example.demo.repositories.UsuarioRepository;
@@ -8,14 +8,17 @@ import java.util.Optional;
 @Service
 public class LoginService {
 
+
     private final UsuarioRepository usuarioRepository;
 
     public LoginService(UsuarioRepository usuarioRepository) {
         this.usuarioRepository = usuarioRepository;
+        System.out.println("ENTRANDO AL logiiiin");
+
     }
 
     public Optional<Usuario> login(String cedula, String contraseña) {
         return usuarioRepository.findByUsuario(cedula)
                 .filter(u -> u.getContraseña().equals(contraseña));
     }
-}
+}*/

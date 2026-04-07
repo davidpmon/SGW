@@ -33,13 +33,14 @@ public class LoginController {
             return "redirect:/home";
         }
 
+
         if (error != null) {
             model.addAttribute("error", "Usuario o contraseña incorrectos");
         }
         if (logout != null) {
             model.addAttribute("mensaje", "Sesión cerrada correctamente");
         }
-        return "login"; // muestra login.html
+        return "login"; // muestra login.html*
     }
     @GetMapping("/logout")
     public String logout() {

@@ -44,6 +44,8 @@ public class Usuario {
             joinColumns = @JoinColumn(name = "id_usuario"),//en la tabla de usuario_roles la parte de la clase usuario es id_usuario
             inverseJoinColumns = @JoinColumn(name = "id_rol")//para ver el rol de un usuario se teiene que ver el id_rol de la clase usuario_roles
     )
+
+    //RELACION ENTRE ENTIDADES
     //usamos set para garantizar que un rol no se repita dos veces en un mismo usuario
     private Set<Rol> roles;//contenedor que guardara los objetos de rol
     //hacemos un set de rol por que que es lo que este objeto tiene o posee?".

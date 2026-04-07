@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 @Repository
 //se le dice a spring que Usuario este es el repositorio para manejar la tabla de usuarios
@@ -16,4 +17,9 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     //spring entiende atraves de findBy que debe hacer una consulta de tipo select con where, una maravilla
     //@Query("SELECT u FROM Usuario u JOIN FETCH u.roles r JOIN FETCH r.permisos WHERE u.usuario = :usuario")
     //Optional<Usuario> findByUsuario(@Param("usuario") String usuario);
+    List<Usuario> findByUsuarioContainingIgnoreCaseOrCorreoContainingIgnoreCase(String usuario, String email);
+
+    /*se le dice a spring data JPA, que busque en la tabla usuarios donde hay una relacion con la tabla roles y dentro de esa
+    * tabla busque el nombre del rol*/
+    List<Usuario> findByRoles_NombreRol(String nombreRol);
 }

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Registro de Usuarios | MASS</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body { background-color: #f9fafb; color: #333; font-family: "Segoe UI", sans-serif; }
+        header { background-color: #004aad; color: white; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+        .navbar-brand { font-weight: 600; font-size: 1.25rem; }
+        .nav-link { color: #fff !important; transition: 0.3s; }
+        .nav-link:hover { color: #d6e4ff !important; }
+
+        .form-container {
+            background: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            margin-top: 50px;
+            border-top: 5px solid #004aad;
+        }
+
+        h2.title-admin {
+            color: #004aad;
+            font-weight: 600;
+            margin-bottom: 25px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .btn-primary-custom {
+            background-color: #004aad;
+            border: none;
+            padding: 10px 25px;
+            transition: 0.3s;
+        }
+
+        .btn-primary-custom:hover {
+            background-color: #003580;
+            transform: translateY(-1px);
+        }
+
+        .form-label { font-weight: 500; color: #555; }
+
+        /* Estilo para campo autogenerado */
+        .bg-readonly { background-color: #e9ecef !important; cursor: not-allowed; }
+
+        footer { margin-top: 80px; color: #777; font-size: 0.9rem; padding-bottom: 30px; }
+    </style>
+</head>
+<body>
+
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex align-items-center" th:href="@{/administrador/home}">
+                SGW - Módulo Administrador
+            </a>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav ms-auto mb-2 mb-md-0">
+                    <li class="nav-item"><a class="nav-link" th:href="@{/admin/home}">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link active" th:href="@{/admin/usuarios}">Gestión de Usuarios</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/admin/reportes}">Reportes</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/admin/perfil}">Mi Perfil</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<main class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-9">
+            <div class="form-container">
+                <h2 class="title-admin">Dar de Alta Nuevo Usuario</h2>
+
+                <form th:action="@{/admin/usuarios/guardar}" method="post" class="row g-3">
+
+                    <div class="col-md-6">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="nombre" name="nombre" required maxlength="100" placeholder="Ej. Mario">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="apellido" class="form-label">Apellido</label>
+                        <input type="text" class="form-control" id="apellido" name="apellido" required maxlength="100" placeholder="Ej. Portilla">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="cedula" class="form-label">Cédula de Identidad</label>
+                        <input type="text" class="form-control" id="cedula" name="cedula" required maxlength="20" placeholder="Ej. 1712345646">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="correo" class="form-label">Correo Electrónico</label>
+                        <input type="email" class="form-control" id="correo" name="correo" required maxlength="255" placeholder="usuario@empresa.com">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="usuario" class="form-label">Nombre de Usuario (Sugerido)</label>
+                        <input type="text" class="form-control bg-readonly" id="usuario" name="usuario" readonly required placeholder="Se generará automáticamente">
+                        <div class="form-text">Formato: apellido + 2 últimos dígitos CI.</div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="contraseña" class="form-label">Contraseña</label>
+                        <input type="password" class="form-control" id="contraseña" name="contraseña" required maxlength="255">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="rol" class="form-label">Rol en el Sistema</label>
+                        <select id="rol" name="rol" class="form-select" required>
+                            <option value="" disabled selected>Seleccione un rol...</option>
+                            <option value="ADMIN">Administrador General</option>
+                            <option value="SUPERVISOR">Supervisor de Documentos</option>
+                            <option value="OPERADOR">Operador / Usuario</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="estado" class="form-label">Estado Inicial</label>
+                        <select id="estado" name="estado" class="form-select">
+                            <option value="1" selected>Activo (Por defecto)</option>
+                            <option value="0">Inactivo</option>
+                        </select>
+                    </div>
+
+                    <div class="col-12 mt-4 d-flex justify-content-end gap-2">
+                        <a th:href="@{/admin/usuarios}" class="btn btn-outline-secondary px-4">Volver</a>
+                        <button type="submit" class="btn btn-primary-custom text-white px-5">Guardar Registro</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer class="container text-center">
+        <hr class="featurette-divider">
+        <p>&copy; 2026 SGW – Todos los Derechos reservados</p>
+    </footer>
+</main>
+
+<script>
+    const inputApellido = document.getElementById('apellido');
+    const inputCedula = document.getElementById('cedula');
+    const inputUsuario = document.getElementById('usuario');
+
+    function generarUsuario() {
+        const apellido = inputApellido.value.trim().toLowerCase().split(' ')[0]; // Solo el primer apellido
+        const cedula = inputCedula.value.trim();
+
+        if (apellido && cedula.length >= 2) {
+            const ultimosDos = cedula.slice(-2);
+            inputUsuario.value = apellido + ultimosDos;
+        } else {
+            inputUsuario.value = "";
+        }
+    }
+
+    inputApellido.addEventListener('input', generarUsuario);
+    inputCedula.addEventListener('input', generarUsuario);
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

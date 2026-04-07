@@ -38,7 +38,7 @@ public class UsuarioDetailsService implements UserDetailsService {
                 .flatMap(rol -> {//por cada rol hay una lista de las autoridades(permisos)
                     var autoridades = new java.util.ArrayList<SimpleGrantedAuthority>();//lista vacia para guardar el rol y los permisos
                     // agregacion del rol (con prefijo ROLE_) y todos sus permisos para que spring lo entienda
-                    autoridades.add(new SimpleGrantedAuthority("ROLE_" + rol.getNombre_rol()));
+                    autoridades.add(new SimpleGrantedAuthority("ROLE_" + rol.getNombreRol()));
                     rol.getPermisos().forEach(p -> autoridades.add(new SimpleGrantedAuthority(p.getAccion())));
                     return autoridades.stream();//devuelve un flujo de datos por que flatmap trabaja con streams
                 })
@@ -49,7 +49,7 @@ public class UsuarioDetailsService implements UserDetailsService {
         System.out.println("USUARIO: " + entidadusuario.getUsuario());
 
         entidadusuario.getRoles().forEach(rol -> {
-            System.out.println("UEAPA ROL: " + rol.getNombre_rol());
+            System.out.println("UEAPA ROL: " + rol.getNombreRol());
 
             rol.getPermisos().forEach(p -> {
                 System.out.println("PERMISO: " + p.getAccion());

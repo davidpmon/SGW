@@ -20,10 +20,10 @@ public class Rol {
     @Id//Le dice a java y a spring que esto es un PK de SQL
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_rol")
-    private Long id_rol;
+    private Long idRol;
 
     @Column(name = "nombre_rol", nullable = false, unique = true, length = 50)
-    private String nombre_rol;
+    private String nombreRol;
 
     //Un rol puede tener muchos permisos y un permiso puede estar en muchos roles
     @ManyToMany(fetch = FetchType.EAGER)//se usa eager para cargar todos los datos de la tabla
